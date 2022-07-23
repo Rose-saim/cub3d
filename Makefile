@@ -18,7 +18,7 @@ RL = ranlib
 
 $(NAME):	$(MANDA_OBJS)
 			make -C mlx
-			$(CC) $(CFLAGS) $(MANDA_OBJS) $(MLX) -o $(NAME)
+			$(CC) $(CFLAGS) -lm $(MANDA_OBJS) $(MLX) -o $(NAME)
 
 all:		$(NAME)
 

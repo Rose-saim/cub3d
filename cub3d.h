@@ -19,6 +19,8 @@
 # include <sys/stat.h>
 # include <fcntl.h>
 # include "gnl/get_next_line.h"
+# include <math.h>
+# define PI 3.14159265359
 
 typedef struct s_img
 {
@@ -79,6 +81,13 @@ typedef struct s_game
 	t_collect		collect;
 }				t_game;
 
+typedef struct	s_ray
+{
+	double		raydirx; //calcul de direction x du rayon
+	double		raydiry; //calcul de direction y du rayon
+
+}					t_ray;
+
 typedef struct s_data
 {
 	void	*mlx_ptr;
@@ -86,6 +95,7 @@ typedef struct s_data
 	t_img	img;
     t_game  game;
 	int		cur_img;
+	t_ray	ray;
 }	t_data;
 
 //Create color windows
