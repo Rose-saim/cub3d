@@ -7,15 +7,15 @@ int	handle_keypress(t_data *data)
 	return (0);
 }
 
-int	handle_keyrelease(int keysym, void *data)
-{
-    (void)data;
-	printf("Keyrelease: %d\n", keysym);
-	return (0);
-}
+// int	handle_keyrelease(int keysym, void *data)
+// {
+//     (void)data;
+// 	printf("Keyrelease: %d\n", keysym);
+// 	return (0);
+// }
 
 
-int	handle_nothing(void)
-{
-	return (0);
-}
+// int	handle_nothing(void)
+// {
+// 	return (0);
+// }

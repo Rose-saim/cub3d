@@ -29,6 +29,7 @@
 # define K_S 115
 # define K_W 119
 
+
 typedef struct s_img
 {
 	void	*mlx_img;
@@ -81,7 +82,6 @@ typedef struct s_localisation
 
 typedef struct s_game
 {
-	char			**map;
 	t_localisation	loc;
 	t_image			image;
 	t_window		window;
@@ -142,13 +142,10 @@ typedef struct s_data
 }	t_data;
 
 //Create color windows
-int		render(t_data *data);
+int	main_loop(t_data *data);
 void	get_map(int fd, t_game *game);
 void	print_map(t_data *game);
 void	update_map(t_data *data);
-
-//Background/rect forms and colors
-int render_rect(t_img *img, t_rect rect);
 
 //Free_error
 void	free_map(char **map);

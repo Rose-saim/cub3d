@@ -1,5 +1,27 @@
 #include "cub3d.h"
 
+int map[24][24] = {
+								{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,3,0,0,0,3,0,0,0,1},
+							{1,0,0,0,0,0,2,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,0,0,0,0,0,2,2,0,2,2,0,0,0,0,3,0,3,0,3,0,0,0,1},
+							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,4,0,0,0,0,5,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,4,0,4,0,0,0,0,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,4,0,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,4,4,4,4,4,4,4,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+							{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+						};
+
 void	verLine(t_data *data, int x, int y1, int y2, int color)
 {
 	int	y;
@@ -17,7 +39,6 @@ void	calc(t_data *data)
 	int	x;
 
 	x = 0;
-	puts("begin");
 	while (x < WINDOW_WIDTH)
 	{
 		data->wall.camera_x = 2 * x / (double)WINDOW_WIDTH - 1;
@@ -28,7 +49,6 @@ void	calc(t_data *data)
 		data->wall.map_x = (int)data->game.loc.character_x;
 		data->wall.map_y = (int)data->game.loc.character_y;
 
-		printf("'%d|%d\n", data->game.loc.character_x, data->game.loc.character_y);
 		data->wall.delta_dist_x = fabs(1 / data->wall.raydir_x);
 		data->wall.delta_dist_y = fabs(1 / data->wall.raydir_y);
 		
@@ -55,11 +75,8 @@ void	calc(t_data *data)
 			data->wall.side_dist_y = (data->wall.map_y + 1.0 - data->player.pos_y) * data->wall.delta_dist_y;
 		}
 
-	puts("Middle1");
 		while (data->wall.hit == 0)
 		{
-		puts("Beg");
-
 			//jump to next map square, OR in x-direction, OR in y-direction
 			if (data->wall.side_dist_x < data->wall.side_dist_y)
 			{
@@ -74,11 +91,9 @@ void	calc(t_data *data)
 				data->wall.side = 1;
 			}
 			//Check if ray has data->wall.hit a wall
-			if (data->game.map[data->wall.map_x][data->wall.map_y] == '1') 
+			if (map[data->wall.map_x][data->wall.map_y] > 0) 
 				data->wall.hit = 1;
-		puts("end");
 		}
-	puts("Middle2");
 		if (data->wall.side == 0)
 			data->wall.perp_wall_dist = (data->wall.map_x - data->player.pos_x + (1 - data->wall.step_x) / 2) / data->wall.raydir_x;
 		else
@@ -95,14 +110,13 @@ void	calc(t_data *data)
 		if(data->wall.draw_end >= WINDOW_HEIGHT)
 			data->wall.draw_end = WINDOW_HEIGHT - 1;
 
-		if (data->game.map[data->wall.map_y][data->wall.map_x] == '1')
+		if (map[data->wall.map_x][data->wall.map_y] > 0)
 			data->wall.color = 0xFF0000;
 		else
 			data->wall.color = 0xFFFF00;
 		
 		if (data->wall.side == 1)
 			data->wall.color = data->wall.color / 2;
-	puts("Middle3");
 
 		verLine(data, x, data->wall.draw_start, data->wall.draw_end, data->wall.color);
 		
@@ -130,15 +144,6 @@ int	main(int ac, char **av)
 	data.wall.moveSpeed = 1;
 	data.wall.rotSpeed = 0.05;
 
-    if (ac != 2)
-        return 2;
-	//Open fd
-    fd = open(av[1], O_RDONLY);
-	//Get map to char **
-    get_map(fd, &data.game);
-    close(fd);
-	//init windows
-	render(&data);
 	data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		return (EXIT_FAILURE);

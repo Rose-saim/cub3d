@@ -1,6 +1,7 @@
-MANDA_NAMES = 	cub3d.c background_rect.c mouvements.c hooks.c read_map.c print_map.c free_error.c \
+MANDA_NAMES = 	cub3d.c mouvements.c hooks.c  \
 				gnl/get_next_line.c gnl/get_next_line_utils.c \
 # test.c
+
 
 
 MANDA_OBJS =	 $(MANDA_NAMES:.c=.o)
@@ -8,7 +9,8 @@ MANDA_OBJS =	 $(MANDA_NAMES:.c=.o)
 NAME = cub3d
 
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = 
+# -Wall -Wextra -Werror -g
 MLX = mlx/libmlx_Linux.a -lX11 -lXext
 
 AR = ar rc
