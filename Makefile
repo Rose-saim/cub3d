@@ -1,6 +1,7 @@
-MANDA_NAMES = 	background_rect.c cub3d.c free_error.c hooks.c \
-				mouvements.c print_map.c read_map.c \
+MANDA_NAMES = 	cub3d.c background_rect.c mouvements.c hooks.c read_map.c print_map.c free_error.c \
 				gnl/get_next_line.c gnl/get_next_line_utils.c \
+# test.c
+
 
 MANDA_OBJS =	 $(MANDA_NAMES:.c=.o)
 

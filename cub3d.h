@@ -6,6 +6,8 @@
 
 #define WHITE_PIXEL 0xFFFFFF
 #define BLACK_PIXEL 00000
+# define RED_PIXEL  0xFF2F02
+# define BLUE_PIXEL  0x0464F1
 #define YELLOW_PIXEL 0XFFFF6B
 
 #include <X11/keysym.h>
@@ -21,6 +23,11 @@
 # include "gnl/get_next_line.h"
 # include <math.h>
 # define PI 3.14159265359
+
+# define K_A 97
+# define K_D 100
+# define K_S 115
+# define K_W 119
 
 typedef struct s_img
 {
@@ -81,12 +88,47 @@ typedef struct s_game
 	t_collect		collect;
 }				t_game;
 
-typedef struct	s_ray
+typedef struct		s_wall_info
 {
-	double		raydirx; //calcul de direction x du rayon
-	double		raydiry; //calcul de direction y du rayon
+	double		moveSpeed;
+	double		rotSpeed;
+	double		camera_x;
+	double		raydir_x;
+	double		raydir_y;
+	double		side_dist_x;
+	double		side_dist_y;
+	double		delta_dist_x;
+	double		delta_dist_y;
+	double		perp_wall_dist;
+	double		wall_x;
+	double		step;
+	double		tex_pos;
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
+	int		hit;
+	int		side;
+	int		line_height;
+	int		draw_start;
+	int		draw_end;
+	int		tex_num;
+	int		tex_x;
+	int		tex_y;
+	int		color;
+	int		x;
+	int		y;
+}			t_wall_info;
 
-}					t_ray;
+typedef struct		s_player
+{
+	double		pos_x;
+	double		pos_y;
+	double		dir_x;
+	double		dir_y;
+	double		plane_x;
+	double		plane_y;
+}			t_player;
 
 typedef struct s_data
 {
@@ -95,7 +137,8 @@ typedef struct s_data
 	t_img	img;
     t_game  game;
 	int		cur_img;
-	t_ray	ray;
+	t_wall_info wall;
+	t_player 	player;
 }	t_data;
 
 //Create color windows

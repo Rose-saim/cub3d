@@ -1,24 +1,5 @@
 #include "cub3d.h"
 
-void	print_image(t_data *data, t_game *game, int j, int i)
-{
-
-	if (game->map[j][i] == '1')
-		render_rect(&data->img, (t_rect){i * 52, j * 52, 50, 50, WHITE_PIXEL});
-	if (game->map[j][i] == 'P')
-	{
-		if (0 != game->loc.character_x || 0 != game->loc.character_y)
-			render_rect(&data->img, (t_rect){game->loc.character_x * 52, game->loc.character_y * 52, 50, 50, YELLOW_PIXEL});
-		else	
-		{
-			render_rect(&data->img, (t_rect){i * 52, j * 52, 50, 50, YELLOW_PIXEL});
-			game->loc.character_x = i;
-			game->loc.character_y = j;
-		}
-	}
-
-}
-
 void	print_map(t_data *data)
 {
     t_game  *game = &data->game;
@@ -28,14 +9,25 @@ void	print_map(t_data *data)
 
 	i = 0;
 	j = 0;
+	puts("Beg");
     while (game->map[j])
 	{
 		i = 0;
 		ret = ft_strlen(game->map[j]);
 		while (i < ret)
-			print_image(data, game, j, i++);
+		{
+			if (game->map[j][i] == 'P')
+			{
+				game->loc.character_x = i;
+				game->loc.character_y = j;
+
+				return ;
+			}
+			++i;
+		}
 		++j;
 	}
+	puts("End");
 }
 
 void	update_map(t_data *data)
